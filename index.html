@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI Coffee - Mersin'de Japon Tarzı Kafe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="brush-texture" x-data="{
+    activeCategory: null,
+    navbarScrolled: false,
+    mobileMenuOpen: false,
+    init() {
+        window.addEventListener('scroll', () => {
+            this.navbarScrolled = window.scrollY > 50;
+        });
+    },
+    toggleCategory(category) {
+        this.activeCategory = this.activeCategory === category ? null : category;
+    }
+}">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" 
+         :class="navbarScrolled ? 'navbar-scrolled' : 'bg-transparent'">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="images/ki.png" alt="KI Coffee" class="h-12 w-12">
+                    <span class="japanese-font text-xl font-semibold text-[#7C5B4F]">KI Coffee</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link">Ana Sayfa</a>
+                    <a href="#menu" class="nav-link">Menü</a>
+                    <a href="#contact" class="nav-link">İletişim</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden">
+                    <i class="fas fa-bars text-[#55614D] text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform -translate-y-4"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-300"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-4"
+                 class="md:hidden mt-4 pb-4 border-t border-[#55614D]/20">
+                <div class="flex flex-col space-y-4 pt-4">
+                    <a href="#home" class="nav-link">Ana Sayfa</a>
+                    <a href="#menu" class="nav-link">Menü</a>
+                    <a href="#contact" class="nav-link">İletişim</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="container mx-auto px-4 text-center">
+            <div class="logo-animation mb-8">
+                <img src="images/ki.png" alt="KI Coffee Logo" class="mx-auto h-32 w-32 mb-6">
+            </div>
+            
+            <h1 class="japanese-font text-5xl md:text-7xl font-bold text-[#7C5B4F] mb-6 fade-in">
+                KI Coffee
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-[#55614D] mb-8 fade-in" style="animation-delay: 0.3s;">
+                Mersin'de Japon Tarzı Kafe
+            </p>
+            
+            <div class="fade-in" style="animation-delay: 0.6s;">
+                <a href="#menu" class="cta-button">
+                    <span>Menüye Git</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Brush stroke effects -->
+        <div class="brush-stroke"></div>
+        <div class="brush-stroke"></div>
+        <div class="brush-stroke"></div>
+        
+        <!-- Additional floating elements -->
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-20 bg-white/50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="japanese-font text-4xl md:text-5xl font-bold text-[#7C5B4F] mb-4">Menümüz</h2>
+                <p class="text-lg text-[#55614D] max-w-2xl mx-auto">Japon tarzı içecekler ve tatlılarımızın özenle hazırlanmış seçkisini keşfedin</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- Hot Coffees -->
+                <div class="mb-8">
+                    <div @click="toggleCategory('hot-coffees')" class="category-header">
+                        <span class="font-semibold">Sıcak Kahveler</span>
+                        <i class="fas fa-chevron-down chevron" :class="activeCategory === 'hot-coffees' ? 'rotated' : ''"></i>
+                    </div>
+                    <div class="accordion-content" :class="activeCategory === 'hot-coffees' ? 'open' : ''">
+                        <div class="menu-grid">
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Türk Kahvesi</h3>
+                                        <p>Geleneksel Türk hazırlama</p>
+                                        <div class="price-badge">100.00 TL</div>
+                                    </div>
+                                    <img src="images/turk-kahvesi-7bpc-cover-gphf_cover-250616120223.webp" alt="Turkish Coffee">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Latte</h3>
+                                        <p>Buharlanmış süt ile yumuşak espresso</p>
+                                        <div class="price-badge">130.00 TL</div>
+                                    </div>
+                                    <img src="images/latte-250616120601.jpg" alt="Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Cappuccino</h3>
+                                        <p>Espresso ve köpük mükemmel dengesi</p>
+                                        <div class="price-badge">140.00 TL</div>
+                                    </div>
+                                    <img src="images/cappuchino-250616120659.jpg" alt="Cappuccino">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Mocha</h3>
+                                        <p>Zengin çikolata ve espresso</p>
+                                        <div class="price-badge">140.00 TL</div>
+                                    </div>
+                                    <img src="images/mocha-250616120314.jpg" alt="Mocha">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Americano</h3>
+                                        <p>Sıcak su ile espresso</p>
+                                        <div class="price-badge">110.00 TL</div>
+                                    </div>
+                                    <img src="images/americano-250616120722.jpg" alt="Americano">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Flat White</h3>
+                                        <p>Yumuşak mikro köpük dokusu</p>
+                                        <div class="price-badge">150.00 TL</div>
+                                    </div>
+                                    <img src="images/flat-white.webp" alt="Flat White">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Çifte Espresso</h3>
+                                        <p>Güçlü ve yoğun</p>
+                                        <div class="price-badge">120.00 TL</div>
+                                    </div>
+                                    <img src="images/double-espressso-250616120755.jpg" alt="Double Espresso">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Cortado</h3>
+                                        <p>Eşit oranda süt ile espresso</p>
+                                        <div class="price-badge">130.00 TL</div>
+                                    </div>
+                                    <img src="images/cortado-250616120638.jpg" alt="Cortado">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Karamel Latte</h3>
+                                        <p>Tatlı karamel aroması</p>
+                                        <div class="price-badge">150.00 TL</div>
+                                    </div>
+                                    <img src="images/caramel-latte-250616120528.jpg" alt="Caramel Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Fındık Latte</h3>
+                                        <p>Zengin fındık aroması</p>
+                                        <div class="price-badge">160.00 TL</div>
+                                    </div>
+                                    <img src="images/hazelnut-latte.jpg" alt="Hazelnut Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Vanilya Latte</h3>
+                                        <p>Yumuşak vanilya tatlılığı</p>
+                                        <div class="price-badge">150.00 TL</div>
+                                    </div>
+                                    <img src="images/vanillia-latte.jpg" alt="Vanilla Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Beyaz Çikolata Mocha</h3>
+                                        <p>Kremalı beyaz çikolata</p>
+                                        <div class="price-badge">170.00 TL</div>
+                                    </div>
+                                    <img src="images/white-choclate-mocha.jpg" alt="White Chocolate Mocha">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Karamel Macchiato</h3>
+                                        <p>Katmanlı karamel lezzeti</p>
+                                        <div class="price-badge">160.00 TL</div>
+                                    </div>
+                                    <img src="images/caramel-maccihato.jpg" alt="Caramel Macchiato">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Affogato</h3>
+                                        <p>Dondurma üzerine espresso</p>
+                                        <div class="price-badge">180.00 TL</div>
+                                    </div>
+                                    <img src="images/affogato-250616124335.jpg" alt="Affogato">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Iced Coffees -->
+                <div class="mb-8">
+                    <div @click="toggleCategory('iced-coffees')" class="category-header">
+                        <span class="font-semibold">Soğuk Kahveler</span>
+                        <i class="fas fa-chevron-down chevron" :class="activeCategory === 'iced-coffees' ? 'rotated' : ''"></i>
+                    </div>
+                    <div class="accordion-content" :class="activeCategory === 'iced-coffees' ? 'open' : ''">
+                        <div class="menu-grid">
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Latte</h3>
+                                        <p>Yumuşak ve ferahlatıcı</p>
+                                        <div class="price-badge">130.00 TL</div>
+                                    </div>
+                                    <img src="images/ice-latte.jpg" alt="Iced Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Vanilya Latte</h3>
+                                        <p>Tatlı vanilya aroması</p>
+                                        <div class="price-badge">140.00 TL</div>
+                                    </div>
+                                    <img src="images/ice-vanillia-latte.jpg" alt="Iced Vanilla Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Karamel Latte</h3>
+                                        <p>Zengin karamel tatlılığı</p>
+                                        <div class="price-badge">140.00 TL</div>
+                                    </div>
+                                    <img src="images/ice-caremel-latte-250616124701.jpg" alt="Iced Caramel Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Americano</h3>
+                                        <p>Güçlü ve ferahlatıcı</p>
+                                        <div class="price-badge">110.00 TL</div>
+                                    </div>
+                                    <img src="images/ice-americano.jpg" alt="Iced Americano">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Mocha</h3>
+                                        <p>Çikolata ve kahve karışımı</p>
+                                        <div class="price-badge">140.00 TL</div>
+                                    </div>
+                                    <img src="images/ice-mocha.jpg" alt="Iced Mocha">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Flat White</h3>
+                                        <p>Yumuşak mikro köpük dokusu</p>
+                                        <div class="price-badge">150.00 TL</div>
+                                    </div>
+                                    <img src="images/ice-flat-white.jpg" alt="Iced Flat White">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Fındık Latte</h3>
+                                        <p>Zengin fındık aroması</p>
+                                        <div class="price-badge">160.00 TL</div>
+                                    </div>
+                                    <img src="images/ice-hazelnut-latte.jpg" alt="Iced Hazelnut Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Karamel Macchiato</h3>
+                                        <p>Katmanlı karamel lezzeti</p>
+                                        <div class="price-badge">160.00 TL</div>
+                                    </div>
+                                    <img src="images/ice-caramel-maccihato.jpg" alt="Iced Caramel Macchiato">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Beyaz Çikolata Mocha</h3>
+                                        <p>Kremalı beyaz çikolata</p>
+                                        <div class="price-badge">170.00 TL</div>
+                                    </div>
+                                    <img src="images/ice-white-chocolate-mocha.jpg" alt="Iced White Chocolate Mocha">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Karamel Frappe</h3>
+                                        <p>Karıştırılmış karamel lezzeti</p>
+                                        <div class="price-badge">150.00 TL</div>
+                                    </div>
+                                    <img src="images/frappe-caramel.jpg" alt="Frappe Caramel">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Çikolata Frappe</h3>
+                                        <p>Karıştırılmış çikolata lezzeti</p>
+                                        <div class="price-badge">150.00 TL</div>
+                                    </div>
+                                    <img src="images/frappe-choclate.webp" alt="Frappe Chocolate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Matchas -->
+                <div class="mb-8">
+                    <div @click="toggleCategory('matchas')" class="category-header">
+                        <span class="font-semibold">Matcha İçecekleri</span>
+                        <i class="fas fa-chevron-down chevron" :class="activeCategory === 'matchas' ? 'rotated' : ''"></i>
+                    </div>
+                    <div class="accordion-content" :class="activeCategory === 'matchas' ? 'open' : ''">
+                        <div class="menu-grid">
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Matcha Latte</h3>
+                                        <p>Geleneksel Japon yeşil çayı</p>
+                                        <div class="price-badge">185.00 TL</div>
+                                    </div>
+                                    <img src="images/latte-matcha.jpg" alt="Matcha Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Soğuk Matcha Latte</h3>
+                                        <p>Ferahlatıcı yeşil çay</p>
+                                        <div class="price-badge">185.00 TL</div>
+                                    </div>
+                                    <img src="images/latte-matcha-2.jpg" alt="Ice Matcha Latte">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Vanilya Matcha</h3>
+                                        <p>Tatlı vanilya karışımı</p>
+                                        <div class="price-badge">205.00 TL</div>
+                                    </div>
+                                    <img src="images/vanillia-latte.jpg" alt="Vanilla Matcha">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Çilek Matcha</h3>
+                                        <p>Meyveli yeşil çay</p>
+                                        <div class="price-badge">205.00 TL</div>
+                                    </div>
+                                    <img src="images/matcha-cayi.jpg" alt="Strawberry Matcha">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Bubble Tea Matcha</h3>
+                                        <p>Tapyoka incileri ile</p>
+                                        <div class="price-badge">220.00 TL</div>
+                                    </div>
+                                    <img src="images/0e33ff6c-57e2-4677-89f3-9a557afca681-250801132922.jpg" alt="Bubble Tea Matcha">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ice Cream -->
+                <div class="mb-8">
+                    <div @click="toggleCategory('ice-cream')" class="category-header">
+                        <span class="font-semibold">Dondurma</span>
+                        <i class="fas fa-chevron-down chevron" :class="activeCategory === 'ice-cream' ? 'rotated' : ''"></i>
+                    </div>
+                    <div class="accordion-content" :class="activeCategory === 'ice-cream' ? 'open' : ''">
+                        <div class="menu-grid">
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Kurabiye Dondurma Kasesi</h3>
+                                        <p>Kurabiye parçaları ile</p>
+                                        <div class="price-badge">180.00 TL</div>
+                                    </div>
+                                    <img src="images/dondurma-250616131000.jpg" alt="Cookies Ice Cream Bowl">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Taiyaki Dondurma</h3>
+                                        <p>Balık şeklinde waffle külah</p>
+                                        <div class="price-badge">180.00 TL</div>
+                                    </div>
+                                    <img src="images/dondurma-kulah.webp" alt="Ice Cream Taiyaki">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Külahta Dondurma</h3>
+                                        <p>Klasik yumuşak dondurma</p>
+                                        <div class="price-badge">40.00 TL</div>
+                                    </div>
+                                    <img src="images/oip-250730124406.webp" alt="Ice Cream in a Cone">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desserts -->
+                <div class="mb-8">
+                    <div @click="toggleCategory('desserts')" class="category-header">
+                        <span class="font-semibold">Tatlılar</span>
+                        <i class="fas fa-chevron-down chevron" :class="activeCategory === 'desserts' ? 'rotated' : ''"></i>
+                    </div>
+                    <div class="accordion-content" :class="activeCategory === 'desserts' ? 'open' : ''">
+                        <div class="menu-grid">
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Japon Pancakeleri</h3>
+                                        <p>Kabarık sufle tarzı</p>
+                                        <div class="price-badge">280.00 TL</div>
+                                    </div>
+                                    <img src="images/japanese-souffle-pancakes-696x392-250720131328.png" alt="Japanese Pancakes">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Brownie</h3>
+                                        <p>Dondurma seçeneği +40 TL</p>
+                                        <div class="price-badge">200.00 TL</div>
+                                    </div>
+                                    <img src="images/browni-bite.jpeg" alt="Brownie">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Mochi</h3>
+                                        <p>Çilek, Limon, Oreo</p>
+                                        <div class="price-badge">180.00 TL</div>
+                                    </div>
+                                    <img src="images/102109045-mochi-photo-by-meredith-650x465-daf1a49a814b4648875d99897a181d9f-250730125833.jpg" alt="Mochi">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Kupa Red Velvet</h3>
+                                        <p>Ahududu sosu ile servis</p>
+                                        <div class="price-badge">160.00 TL</div>
+                                    </div>
+                                    <img src="images/red-velvet.jpg" alt="Cup Red Velvet">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Kuma</h3>
+                                        <p>Süt, çilek, karamel, fıstık, fındık sos seçenekleri</p>
+                                        <div class="price-badge">210.00 TL</div>
+                                    </div>
+                                    <img src="images/kuma-250616152702.jpeg" alt="Kuma">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>KIKI</h3>
+                                        <p>Süt, çilek, karamel, fıstık, fındık sos seçenekleri</p>
+                                        <div class="price-badge">210.00 TL</div>
+                                    </div>
+                                    <img src="images/kiki-250616152732.jpeg" alt="KIKI">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cold Drinks -->
+                <div class="mb-8">
+                    <div @click="toggleCategory('cold-drinks')" class="category-header">
+                        <span class="font-semibold">Soğuk İçecekler</span>
+                        <i class="fas fa-chevron-down chevron" :class="activeCategory === 'cold-drinks' ? 'rotated' : ''"></i>
+                    </div>
+                    <div class="accordion-content" :class="activeCategory === 'cold-drinks' ? 'open' : ''">
+                        <div class="menu-grid">
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Smoothie</h3>
+                                        <p>Taze meyve karışımı</p>
+                                        <div class="price-badge">120.00 TL</div>
+                                    </div>
+                                    <img src="images/smoothie-250616130017.jpg" alt="Smoothie">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Limonata</h3>
+                                        <p>Taze limonata</p>
+                                        <div class="price-badge">80.00 TL</div>
+                                    </div>
+                                    <img src="images/limonata-250616130057.webp" alt="Limonata">
+                                </div>
+                            </div>
+                            
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <div class="menu-item-text">
+                                        <h3>Milkshake</h3>
+                                        <p>Kremalı ve koyu</p>
+                                        <div class="price-badge">140.00 TL</div>
+                                    </div>
+                                    <img src="images/mcdonalds-milkshake-02-250730131347.jpg" alt="Milkshake">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-[#F6F0E1]">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="japanese-font text-4xl md:text-5xl font-bold text-[#7C5B4F] mb-4">Bizi Ziyaret Edin</h2>
+                <p class="text-lg text-[#55614D]">Japon geleneği ve modern konforun mükemmel karışımını deneyimleyin</p>
+            </div>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Contact Info -->
+                    <div class="space-y-8">
+                        <div class="contact-card">
+                            <h3 class="japanese-font text-2xl font-bold text-[#7C5B4F] mb-6">İletişim Bilgileri</h3>
+                            
+                            <div class="contact-info-grid">
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h4>Konum</h4>
+                                        <p>Mersin, Türkiye</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h4>Çalışma Saatleri</h4>
+                                        <p>Pazartesi - Pazar: 08:00 - 22:00</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h4>Telefon</h4>
+                                        <p>+90 XXX XXX XX XX</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fab fa-instagram"></i>
+                                    </div>
+                                    <div>
+                                        <h4>Instagram</h4>
+                                        <a href="#" class="contact-link">@kicoffee_mersin</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map -->
+                    <div class="contact-card">
+                        <h3 class="japanese-font text-2xl font-bold text-[#7C5B4F] mb-6">Bizi Bulun</h3>
+                                     <div class="map-container">
+                 <iframe 
+                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3197.35443586623!2d34.51404587577668!3d36.73806267226494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15278b551a22643d%3A0x755e04a4c6b94c9b!2sKi%20Coffee%20Sweet!5e0!3m2!1str!2str!4v1754104123659!5m2!1str!2str" 
+                     width="100%" 
+                     height="300" 
+                     style="border:0; border-radius: var(--border-radius);" 
+                     allowfullscreen="" 
+                     loading="lazy" 
+                     referrerpolicy="no-referrer-when-downgrade">
+                 </iframe>
+             </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-4 text-center">
+            <div class="footer-content">
+                <img src="images/ki.png" alt="KI Coffee" class="footer-logo">
+                <h3 class="japanese-font text-2xl font-bold mb-2">KI Coffee</h3>
+                <p>Mersin'de sevgiyle hazırlandı.</p>
+            </div>
+            
+            <div class="footer-divider">
+                <p>&copy; KI Coffee 2025. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
